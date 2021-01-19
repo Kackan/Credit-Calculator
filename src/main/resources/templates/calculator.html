@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title}"></title>
+</head>
+<style>
+    ul{
+        list-style: none;
+    }
+
+    body{
+        font-size: 20px;
+    }
+
+    .wrapper{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 50vw;
+
+    }
+
+    span{
+        width: 100px;
+        display: inline-block;
+    }
+
+    .decreasing-payment{
+        text-align: center;
+
+    }
+    li{
+        display: flex;
+        align-items: center;
+    }
+
+    .container{
+        display: flex;
+        justify-content: center;
+    }
+
+    .summary{
+        display: flex;
+        justify-content: flex-end;
+        width: 50vw;
+        flex-direction: column;
+    }
+
+    .summary p{
+        width: 100%;
+        text-align: center;
+        background-color: gainsboro;
+        display: flex;
+        align-items:center ;
+        justify-content: center;
+        margin: -5px 0px 8px 0px;
+    }
+</style>
+<body>
+
+
+<div class="container">
+    <div class="wrapper">
+        <div class="decreasing-payment">
+            <ul th:each="value,pay : ${payments}">
+                <li>
+                    <span th:text="#{instalment}"></span>
+                    <span th:text="${pay.index+1}"></span>
+                    <span th:text="${value}"></span>
+                    <span th:text="${payment}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="summary">
+            <p><span th:text="#{sumUsual}":></span> <span th:text="${sumOfInstalments}"></span><span th:text="#{currency}"></span></p>
+            <p><span th:text="#{sumDecreasing}"></span> <span th:text="${sumOfDecreasingInstalments}"></span><span th:text="#{currency}"></span></p>
+            <p><span th:text="#{provision}"> </span><span th:text="${provision}"></span><span th:text="#{currency}"></span></p>
+            <p><span th:text="#{amount}"> </span><span th:text="${amount}"></span> <span th:text="#{currency}"></span></p>
+            <p><a href="/"><span th:text="#{backToIndex}"></span></a></p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script th:inline="javascript">
+    const ul=document.querySelector('ul');
+    const list=Array.from(document.querySelectorAll('li'));
+    list.forEach(li => {
+        list.indexOf(li)%2?li.style.backgroundColor='white':li.style.backgroundColor='grey';
+    });
+    const newItem=document.createElement('li');
+    const span=document.createElement('span');
+    const span2=document.createElement('span');
+    const span3=document.createElement('span');
+    const spanEmpty=document.createElement('span');
+    span.innerText=' ';
+    span.innerText='Number of instalment';
+    span2.innerText='Decreasing instalment';
+    span3.innerText='Usual instalment';
+    newItem.append(spanEmpty)
+    newItem.appendChild(span);
+    newItem.appendChild(span2);
+    newItem.appendChild(span3);
+    ul.insertBefore(newItem, ul.childNodes[0]);
+</script>
+
+</body>
+</html>
